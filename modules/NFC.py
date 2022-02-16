@@ -2,7 +2,7 @@ from time import time, sleep
 
 def readNFC(reader,user_credentials, timeOut):
     while(True):
-        # print("Waiting for authentication")
+        print("Waiting for authentication")
         id, user = reader.read()
 
         # print(id)

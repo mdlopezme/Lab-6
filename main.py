@@ -20,7 +20,7 @@ def main():
     ringer_info =[ False, time()-timeOut, True ]
 
     try:
-        authetication = threading.Thread(target=NFC.readNFC, args=(reader,user_credentials, timeOut))
+        authentication = threading.Thread(target=NFC.readNFC, args=(reader,user_credentials, timeOut))
         display = threading.Thread(target=LCD.update, args=(lcd, user_credentials))
         bell = threading.Thread(target=BELL.ringer, args=(ringer_info,))
         security = threading.Thread(target=SEC.secure, args=(user_credentials,timeOut))
@@ -28,7 +28,7 @@ def main():
         logger = threading.Thread(target=LOGGER.log, args=(user_credentials, ringer_info, timeOut))
         web_server = threading.Thread(target=WEBSERVER.main)
 
-        authetication.start()
+        authentication.start()
         display.start()
         bell.start()
         security.start()
