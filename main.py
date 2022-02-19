@@ -23,7 +23,6 @@ def main():
         authentication = threading.Thread(target=NFC.readNFC, args=(reader,user_credentials, TIMEOUT))
         display = threading.Thread(target=LCD.update, args=(lcd, user_credentials))
         bell = threading.Thread(target=BELL.ringer, args=(ringer_info,))
-        security = threading.Thread(target=SEC.secure, args=(user_credentials,TIMEOUT))
         servo = threading.Thread(target=SERVO.act, args=(user_credentials, TIMEOUT))
         logger = threading.Thread(target=LOGGER.log, args=(user_credentials, ringer_info, TIMEOUT))
         web_server = threading.Thread(target=WEBSERVER.main)
@@ -31,15 +30,10 @@ def main():
         authentication.start()
         display.start()
         bell.start()
-        security.start()
         servo.start()
         logger.start()
         web_server.start()
 
-        # while(True):
-        #     # print(user_credentials)
-        #     print(ringer_info)
-        #     sleep(0.1)
     except KeyboardInterrupt:
         LCD.destroy(lcd)
         GPIO.cleanup()

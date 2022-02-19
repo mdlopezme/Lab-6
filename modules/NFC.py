@@ -21,4 +21,7 @@ def readNFC(reader,user_credentials, timeOut):
             user_credentials[3] = False
             user_credentials[4] = False
 
+        if time() > (user_credentials[2]+timeOut):
+            user_credentials[3] = False # Lock everything
+
         sleep(timeOut)

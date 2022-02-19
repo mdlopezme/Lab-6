@@ -27,6 +27,7 @@ def setUp():
     return [lcd, reader]
 
 def destroy(lcd):
+    print('Clearing LCD')
     lcd.clear()
 
 
