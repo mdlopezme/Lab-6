@@ -21,11 +21,11 @@ function door_control(){
     // });
 }
 
-function get_URL(start_id,end_id) {
+function get_URL_params(start_id,end_id) {
   let timeZone=Intl.DateTimeFormat().resolvedOptions().timeZone
   let startDate=document.getElementById(start_id).value;
   let endDate=document.getElementById(end_id).value;
-  return '/door?start='+startDate+'&end='+endDate+'&timezone='+timeZone;
+  return '?start='+startDate+'&end='+endDate+'&timezone='+timeZone;
 }
 
 function inject_response(response,tableID) {
@@ -54,7 +54,7 @@ function inject_response(response,tableID) {
 
 function door_logs() {
   console.log("Get door attempts.");
-  let theUrl=get_URL('lock-start','lock-end')
+  let theUrl='/door' + get_URL_params('lock-start','lock-end')
   fetch(theUrl)
     .then(response=>response.json())
     .then(function(response) {
