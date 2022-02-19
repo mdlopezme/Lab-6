@@ -56,7 +56,6 @@ def update(lcd, user_credentials, kill_threads):
         if abs(user_credentials[2]-time()) > 5:
             messageUpdate(lcd, 'Please scan', 'your card.')
         elif user_credentials[3] == True:
-            print(user_credentials[1])
             messageUpdate(lcd, "Welcome Home", str(user_credentials[1]) )
             
         else:
