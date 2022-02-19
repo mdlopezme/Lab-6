@@ -5,7 +5,7 @@ import modules.BELL as BELL
 import modules.SEC as SEC
 import modules.SERVO as SERVO
 import modules.LOGGER as LOGGER
-import web_server.WEBSERVER as WEBSERVER
+import modules.WEBSERVER as WEBSERVER
 
 from time import time, sleep
 import threading
@@ -15,17 +15,17 @@ def main():
     print('Starting Program')
 
     [lcd, reader] = LCD.setUp()
-    timeOut = 5
-    user_credentials = [0, '', time()-timeOut, False, True ]
-    ringer_info =[ False, time()-timeOut, True ]
+    TIMEOUT = 5
+    user_credentials = [0, '', time()-TIMEOUT, False, True ]
+    ringer_info =[ False, time()-TIMEOUT, True ]
 
     try:
-        authentication = threading.Thread(target=NFC.readNFC, args=(reader,user_credentials, timeOut))
+        authentication = threading.Thread(target=NFC.readNFC, args=(reader,user_credentials, TIMEOUT))
         display = threading.Thread(target=LCD.update, args=(lcd, user_credentials))
         bell = threading.Thread(target=BELL.ringer, args=(ringer_info,))
-        security = threading.Thread(target=SEC.secure, args=(user_credentials,timeOut))
-        servo = threading.Thread(target=SERVO.act, args=(user_credentials, timeOut))
-        logger = threading.Thread(target=LOGGER.log, args=(user_credentials, ringer_info, timeOut))
+        security = threading.Thread(target=SEC.secure, args=(user_credentials,TIMEOUT))
+        servo = threading.Thread(target=SERVO.act, args=(user_credentials, TIMEOUT))
+        logger = threading.Thread(target=LOGGER.log, args=(user_credentials, ringer_info, TIMEOUT))
         web_server = threading.Thread(target=WEBSERVER.main)
 
         authentication.start()

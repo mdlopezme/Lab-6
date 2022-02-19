@@ -1,4 +1,5 @@
 # from urllib import response
+from sys import modules
 from wsgiref.simple_server import make_server
 from pyramid.config import Configurator
 from pyramid.response import Response, FileResponse
@@ -7,6 +8,7 @@ import mysql.connector as mysql
 from dotenv import load_dotenv
 import os
 # import datetime
+from .SERVO import set_permanet_unclock
 
 load_dotenv('credentials.env')
 
@@ -91,6 +93,12 @@ def bell_query(req):
     # print(the_response)
     return the_response
 
+def door_override(req):
+    state=req.params['state'] == 'true'
+    set_permanet_unclock(state)
+    theResponse = []
+    return theResponse
+
 def main():
     with Configurator() as config:
         config.add_route('home', '/')
@@ -102,6 +110,8 @@ def main():
         config.add_view(door_querry, route_name='door', renderer='json')
         config.add_route('bell', '/bell')
         config.add_view(bell_query, route_name='bell', renderer='json')
+        config.add_route('override', 'override')
+        config.add_view(door_override, route_name='override', renderer='json')
 
         # config.add_static_view(name='/', path='/home/pi/repositories/ece-140a-winter-2022-mdlopezme/Lab-6/Midterm/web_server/public', cache_max_age=3600)
 

@@ -40,11 +40,11 @@
 }
 
 .stylish-table tbody tr:last-of-type {
-  border-bottom: 2px solid #449ee3;
+  border-bottom: 2px solid #e36444;
 }
 
 a {
-  color: #449ee3;
+  color: #e36444;
   text-decoration: none;
 }
 

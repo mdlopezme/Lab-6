@@ -12,6 +12,7 @@ OFFSET_DUTY = 0.5        # define pulse offset of servo
 SERVO_MIN_DUTY = 2.5 + OFFSET_DUTY     # define pulse duty cycle for minimum angle of servo
 SERVO_MAX_DUTY = 12.5 + OFFSET_DUTY    # define pulse duty cycle for maximum angle of servo
 SERVO_DELAY_SEC = 0.001
+permanent_unlock = False
 servoPin = 24
 
 def setup():
@@ -36,22 +37,28 @@ def unlock():
     for angle in range(180, -1, -1): # make servo rotate from 180 to 0 deg
         servoWrite(angle)
         time.sleep(SERVO_DELAY_SEC)
-    
+
+def set_permanet_unclock(state):
+    global permanent_unlock
+    permanent_unlock = bool(state)
+
 def act(user_credentials, timeOut):
+    global permanent_unlock
     setup()
-    locked = True
+    locked = False
     try:
-        lock() # Start locking the door
         while True:
-            if abs(time.time() - user_credentials[2]) > timeOut and not locked:
-                print('Locking access')
+            # print((permanent_unlock,user_credentials[3]))
+
+            if not permanent_unlock and not user_credentials[3]:
+               if not locked:
                 lock()
-                locked = True
-            elif abs(time.time() - user_credentials[2]) < timeOut and locked and user_credentials[3]:
-                print('Unlocking access')
-                unlock()
+               locked = True
+            elif locked:
+                if locked:
+                    unlock()
                 locked = False
-                
+
             time.sleep(0.5)
     except KeyboardInterrupt:
         p.stop()

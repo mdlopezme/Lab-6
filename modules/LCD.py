@@ -41,9 +41,10 @@ def messageUpdate(lcd, first, second):
     lcd.clear()
     lcd.message( first + '\n')
     lcd.message( second )
-
+    sleep(2)
     first_line = first
     second_line = second
+    
 
 def update(lcd, user_credentials):
     lcd.begin(16,2)     # set number of LCD lines and columns
@@ -53,6 +54,8 @@ def update(lcd, user_credentials):
         if abs(user_credentials[2]-time()) > 5:
             messageUpdate(lcd, 'Please scan', 'your card.')
         elif user_credentials[3] == True:
-            messageUpdate(lcd, 'Welcome Home', user_credentials[1])
+            print(user_credentials[1])
+            messageUpdate(lcd, "Welcome Home", str(user_credentials[1]) )
+            
         else:
             messageUpdate(lcd, 'Unauthorized User', 'Please Wait')
