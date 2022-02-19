@@ -14,6 +14,8 @@ document.addEventListener("DOMContentLoaded", function() {
   document.getElementById('lock-end').max=today;
   document.getElementById('bell-start').max=today;
   document.getElementById('bell-end').max=today;
+
+  door_logs();
 });
 
 function door_control(){
