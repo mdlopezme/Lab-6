@@ -21,49 +21,46 @@ function door_control(){
     // });
 }
 
-function door_logs() {
-
-  console.log("Get door attempts.");
+function get_URL(start_id,end_id) {
   let timeZone=Intl.DateTimeFormat().resolvedOptions().timeZone
-  let startDate=document.getElementById('lock-start').value;
-  let endDate=document.getElementById('lock-end').value;
-  let theUrl='/door?start='+startDate+'&end='+endDate+'&timezone='+timeZone;
+  let startDate=document.getElementById(start_id).value;
+  let endDate=document.getElementById(end_id).value;
+  return '/door?start='+startDate+'&end='+endDate+'&timezone='+timeZone;
+}
 
-  let theTable=document.getElementById('door log');
-  console.log(theTable);
+function inject_response(response,tableID) {
+  let theTable=document.getElementById(tableID);
+  // Clear table
+  let rowCount = theTable.rows.length;
+  for (let i = 0; i < rowCount; i++) {
+      theTable.deleteRow(0);
+  }
 
-  // let newTable=document.createElement('tbody');
-  // theTable.parentNode.replaceChild(newTable, theTable);
+  if(response['id']=="No records.") {
+    console.log("no record response")
+    let theRow = theTable.insertRow();
+    theRow.insertCell().innerHTML = "No records found."
+  }
+  else {
+    for (const key in response) {
+      console.log(response[key])
+      let theRow = theTable.insertRow();
+      for (const innerKey in response[key]) {
+        theRow.insertCell().innerHTML=response[key][innerKey];
+      }
+    }
+  }
+}
 
-  console.log(theUrl);
+function door_logs() {
+  console.log("Get door attempts.");
+  let theUrl=get_URL('lock-start','lock-end')
   fetch(theUrl)
     .then(response=>response.json())
     .then(function(response) {
-      let rowCount = theTable.rows.length;
-      for (let i = 0; i < rowCount; i++) {
-          theTable.deleteRow(0);
-      }
-      
-      console.log(response['id']);
-      if(response['id']=="No records.") {
-        console.log("no record response")
-        // document.getElementById('door log')
-        //   .innerHTML="";
-        let theRow = theTable.insertRow();
-        theRow.insertCell().innerHTML = "No records found."
-      }
-      else {
-        for (const key in response) {
-          console.log(response[key])
-          let theRow = theTable.insertRow();
-          theRow.insertCell().innerHTML = response[key]['id'];
-          theRow.insertCell().innerHTML = response[key]['name'];
-          theRow.insertCell().innerHTML = response[key]['timestamp'];
-          theRow.insertCell().innerHTML = response[key]['success'];
-        }
-      }
-    })
-  
+      inject_response(response,'door log');
+    }
+    )
 }
 
 function bell_logs() {
