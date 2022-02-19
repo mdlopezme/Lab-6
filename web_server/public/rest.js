@@ -24,9 +24,10 @@ function door_control(){
 function door_logs() {
 
   console.log("Get door attempts.");
+  let timeZone=Intl.DateTimeFormat().resolvedOptions().timeZone
   let startDate=document.getElementById('lock-start').value;
   let endDate=document.getElementById('lock-end').value;
-  let theUrl='/door?start='+startDate+'&end='+endDate;
+  let theUrl='/door?start='+startDate+'&end='+endDate+'&timezone='+timeZone;
 
   let theTable=document.getElementById('door log');
   console.log(theTable);

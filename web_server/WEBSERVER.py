@@ -23,10 +23,10 @@ def get_home(req):
 def door_override(req):
     return Response("Hello")
 
-def querry_db(a_table,start_date,end_date):
+def querry_db(a_table,start_date,end_date,time_zone):
     db = mysql.connect(host=db_host, user=db_user, passwd=db_pass, database=db_name)
     cursor = db.cursor()
-    cursor.execute("SET time_zone = 'America/Los_Angeles';")
+    cursor.execute(f'SET time_zone = "{time_zone}";')
     cursor.execute(
         f'SELECT * FROM {a_table} WHERE timestamp BETWEEN '
         f'"{start_date}" AND "{end_date} 23:59:59";'
@@ -42,8 +42,9 @@ def querry_db(a_table,start_date,end_date):
 def door_querry(req):
     start_date=req.params['start']
     end_date=req.params['end']
+    time_zone=req.params['timezone']
     print(f'start: {start_date}\nend: {end_date}')
-    the_record=querry_db('User_Auth',start_date,end_date)
+    the_record=querry_db('User_Auth',start_date,end_date,time_zone)
     # print(the_record)
     if not the_record:
         print("no record")
@@ -70,8 +71,8 @@ def main():
         config.add_route('home', '/')
         config.add_view(get_home, route_name='home')
 
-        # config.add_route('door', '/door/{state}')
-        # config.add_view(door_override, route_name='door')
+        config.add_route('lock', '/lock/{state}')
+        config.add_view(door_override, route_name='lock')
         config.add_route('door', '/door')
         config.add_view(door_querry, route_name='door', renderer='json')
 
