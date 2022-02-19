@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
   document.getElementById('bell-end').max=today;
 
   door_logs();
+  bell_logs();
 });
 
 function door_control(){
