@@ -23,9 +23,6 @@ public_path = os.environ['PUBLIC_PATH']
 def get_home(req):
     return FileResponse('./web_server/index.html')
 
-def door_override(req):
-    return Response("Hello")
-
 def querry_db(a_table,start_date,end_date,time_zone):
     db = mysql.connect(host=db_host, user=db_user, passwd=db_pass, database=db_name)
     cursor = db.cursor()
@@ -129,6 +126,7 @@ def main(kill_threads):
     try:
         server.serve_forever()
     except KeyboardInterrupt:
+        print('Closing webserver')
         server.server_close()
 
 if __name__ == '__main__':
