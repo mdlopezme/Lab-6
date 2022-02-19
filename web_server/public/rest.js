@@ -85,4 +85,12 @@ function door_logs() {
 
 function bell_logs() {
     console.log("Get bell rings.");
+    let theUrl='/bell' + get_URL_params('bell-start','bell-end')
+    console.log(theUrl)
+    fetch(theUrl)
+    .then(response=>response.json())
+    .then(function(response) {
+      inject_response(response,'bell logs');
+    }
+    )
 }
