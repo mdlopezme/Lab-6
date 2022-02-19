@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 import os
 # import datetime
 from .SERVO import set_permanet_unclock
+from time import sleep
 
 load_dotenv('credentials.env')
 
@@ -99,7 +100,7 @@ def door_override(req):
     theResponse = []
     return theResponse
 
-def main():
+def main(kill_threads):
     with Configurator() as config:
         config.add_route('home', '/')
         config.add_view(get_home, route_name='home')
@@ -124,7 +125,11 @@ def main():
 
     server = make_server('0.0.0.0', 6543, app)
     print('Web server started on: http://192.168.0.100:6543')
-    server.serve_forever()
+
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        server.server_close()
 
 if __name__ == '__main__':
     main()

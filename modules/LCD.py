@@ -1,3 +1,4 @@
+from re import L
 from sqlite3 import Time
 from lib.PCF8574 import PCF8574_GPIO 
 from lib.Adafruit_LCD1602 import Adafruit_CharLCD
@@ -42,15 +43,15 @@ def messageUpdate(lcd, first, second):
     lcd.clear()
     lcd.message( first + '\n')
     lcd.message( second )
-    sleep(2)
+    # sleep(2)
     first_line = first
     second_line = second
     
 
-def update(lcd, user_credentials):
+def update(lcd, user_credentials, kill_threads):
     lcd.begin(16,2)     # set number of LCD lines and columns
     
-    while(True):
+    while(not kill_threads[0]):
         sleep(1)
         if abs(user_credentials[2]-time()) > 5:
             messageUpdate(lcd, 'Please scan', 'your card.')
@@ -60,3 +61,5 @@ def update(lcd, user_credentials):
             
         else:
             messageUpdate(lcd, 'Unauthorized User', 'Please Wait')
+
+    destroy(lcd)

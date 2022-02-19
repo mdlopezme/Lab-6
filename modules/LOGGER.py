@@ -59,8 +59,8 @@ def log_ringer(ringer_info):
     db.close()
     ringer_info[2]=True
 
-def log(user_credentials,ringer_info, timeOut):
-    while(True):
+def log(user_credentials,ringer_info, kill_threads):
+    while(not kill_threads[0]):
         log_user_auths(user_credentials)
         log_ringer(ringer_info)
         sleep(1)

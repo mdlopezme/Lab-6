@@ -42,12 +42,12 @@ def set_permanet_unclock(state):
     global permanent_unlock
     permanent_unlock = bool(state)
 
-def act(user_credentials, timeOut):
+def act(user_credentials, timeOut, kill_threads):
     global permanent_unlock
     setup()
     locked = False
     try:
-        while True:
+        while(not kill_threads[0]):
             # print((permanent_unlock,user_credentials[3]))
 
             if not permanent_unlock and not user_credentials[3]:

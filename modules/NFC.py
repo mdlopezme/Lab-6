@@ -1,9 +1,11 @@
+from os import kill
 from time import time, sleep
 
-def readNFC(reader,user_credentials, timeOut):
-    while(True):
+def readNFC(reader,user_credentials, timeOut, kill_threads):
+    while(not kill_threads[0]):
         print("Waiting for authentication")
-        id, user = reader.read()
+        
+        id, user = reader.read(kill_threads)
 
         # print(id)
 
@@ -21,7 +23,4 @@ def readNFC(reader,user_credentials, timeOut):
             user_credentials[3] = False
             user_credentials[4] = False
 
-        if time() > (user_credentials[2]+timeOut):
-            user_credentials[3] = False # Lock everything
-
-        sleep(timeOut)
+        sleep(1)
