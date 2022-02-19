@@ -37,25 +37,24 @@ class WebLock():
       config.add_view(self.door_override, route_name='override', renderer='json')
 
       # config.add_static_view(name='/', path='/home/pi/repositories/ece-140a-winter-2022-mdlopezme/Lab-6/Midterm/web_server/public', cache_max_age=3600)
-
-      # # add PUBLIC_PATH = /home/pi/repositories/ece-140a-winter-2022-mdlopezme/Lab-6/Midterm/web_server/public> 
-      # # to credentials.env
       config.add_static_view(name='/', path=public_path, cache_max_age=3600)
-      # config.add_static_view(name='/', path='./public', cache_max_age=3600)
+      app = config.make_wsgi_app()
 
-      self.app = config.make_wsgi_app()
-
-    self.server = make_server('0.0.0.0', 6543, self.app)
+    self.server = make_server('0.0.0.0', 6543, app)
 
   def start(self):
     print('Web server started on: http://192.168.0.100:6543')
-    self.server_thread=threading.Thread(target=self.server.serve_forever(),name="Web Server")
+    self.server_thread=threading.Thread(target=self.server.serve_forever,name="Web Server")
     self.server_thread.start()
+    print(f'server thread is {self.server_thread.is_alive()}')
 
   def stop(self):
+    print(f'server thread is {self.server_thread.is_alive()}')
     print("Ending web server")
-    s_shutdown=threading.Thread(target=self.server.shutdown(), name="server shutdown")
+    self.server.shutdown()
+    s_shutdown=threading.Thread(target=self.server.shutdown, name="server shutdown")
     s_shutdown.start()
+    print(f'server thread is {self.server_thread.is_alive()}')
 
   def get_home(self,req):
     return FileResponse('./web_server/index.html')
@@ -66,3 +65,67 @@ class WebLock():
     theResponse = []
     return theResponse
   
+  def querry_db(self,a_table,start_date,end_date,time_zone):
+    db = mysql.connect(host=db_host, user=db_user, passwd=db_pass, database=db_name)
+    cursor = db.cursor()
+    cursor.execute(f'SET time_zone = "{time_zone}";')
+    cursor.execute(
+        f'SELECT * FROM {a_table} WHERE timestamp BETWEEN '
+        f'"{start_date}" AND "{end_date} 23:59:59";'
+    )
+    record = cursor.fetchall()
+    db.close()
+    if 0==len(record):
+        return False
+    print('record found')
+    return record
+
+  def door_querry(self,req):
+    start_date=req.params['start']
+    end_date=req.params['end']
+    time_zone=req.params['timezone']
+    print(f'start: {start_date}\nend: {end_date}')
+    the_record=self.querry_db('User_Auth',start_date,end_date,time_zone)
+    # print(the_record)
+    if not the_record:
+      print("no record")
+      return {'id' : "No records."}
+    the_response=[]
+    for item in the_record:
+      # print(item[2])
+      # the_timestamp=item[2]
+      # print(the_timestamp)
+      the_response.append(
+        {
+          'id' : item[0],
+          'name' : item[1].strip(),
+          'timestamp' : str(item[2]),
+          'success' : item[3]
+        }
+      )
+    return the_response
+  
+  def bell_query(self,req):
+    start_date=req.params['start']
+    end_date=req.params['end']
+    time_zone=req.params['timezone']
+    print(f'start: {start_date}\nend: {end_date}')
+    the_record=self.querry_db('Bell_Rings',start_date,end_date,time_zone)
+
+    if not the_record:
+      print("no record")
+      return {'id' : "No records."}
+    the_response=[]
+    for item in the_record:
+      # print(item[2])
+      # the_timestamp=item[2]
+      # print(the_timestamp)
+      the_response.append(
+        {
+          'id' : item[0],
+          'ringed' : item[1],
+          'timestamp' : str(item[2])
+        }
+      )
+    return the_response
+
