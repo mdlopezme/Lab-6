@@ -20,26 +20,12 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function door_control(){
-    console.log("com")
-    // door_state = document.getElementById("height").value.split("-");
-    // age_range = document.getElementById("age").value.split("-");
+    console.log("Manual Door Override")
+    door_state = document.getElementById("door_cotrol").checked
+    // True is  Unlocked, False is Automatic
 
-    // theUrl = '/table/' + height_range[0] + '_' + height_range[1] + '_' + age_range[0] + '_' + age_range[1]
-
-    // fetch(theUrl)
-    // .then(function(response) {
-    //     return response.text()
-    // })
-    // .then(function(html) {
-    //     let parser = new DOMParser();
-    //     let doc = parser.parseFromString(html, "text/html");
-
-    //     let newtable = doc.getElementById('container').innerHTML;
-    //     document.getElementById("container").innerHTML = newtable;
-    // })
-    // .catch(function(err) {  
-    //     console.log('Failed to fetch page: ', err);  
-    // });
+    theUrl = '/override?state=' + door_state
+    fetch(theUrl)
 }
 
 function get_URL_params(start_id,end_id) {
@@ -87,7 +73,6 @@ function door_logs() {
 function bell_logs() {
     console.log("Get bell rings.");
     let theUrl='/bell' + get_URL_params('bell-start','bell-end')
-    console.log(theUrl)
     fetch(theUrl)
     .then(response=>response.json())
     .then(function(response) {
