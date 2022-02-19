@@ -8,7 +8,7 @@ import mysql.connector as mysql
 from dotenv import load_dotenv
 import os
 # import datetime
-from .SERVO import set_permanet_unclock
+from .SERVO import set_permanent_unlock
 from time import sleep
 import threading
 
@@ -60,8 +60,8 @@ class WebLock():
     return FileResponse('./web_server/index.html')
 
   def door_override(self,req):
-    state=req.params['state'] == 'true'
-    set_permanet_unclock(state)
+    the_state=req.params['state'] == 'true'
+    set_permanent_unlock(the_state)
     theResponse = []
     return theResponse
   

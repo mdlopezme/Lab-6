@@ -38,7 +38,7 @@ def unlock():
         servoWrite(angle)
         time.sleep(SERVO_DELAY_SEC)
 
-def set_permanet_unclock(state):
+def set_permanent_unlock(state):
     global permanent_unlock
     permanent_unlock = bool(state)
 
