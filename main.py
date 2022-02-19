@@ -43,12 +43,13 @@ def main():
             sleep(100)
 
     except KeyboardInterrupt:
+        print('Please wait, killing threads')
         kill_threads[0] = True
         while authentication.is_alive() or display.is_alive() or security.is_alive() or bell.is_alive() or servo.is_alive() or logger.is_alive():
-            print( (authentication.is_alive(),display.is_alive(),security.is_alive(), bell.is_alive(),servo.is_alive(),logger.is_alive()))
             sleep(1)
+            print('Workig...')
     finally:
-        print('Finally Exitinng')
+        print('Finally Exiting')
         os._exit(os.EX_OK)
 
 if __name__ == '__main__':
