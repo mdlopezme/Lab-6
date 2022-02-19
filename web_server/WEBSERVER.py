@@ -1,3 +1,4 @@
+# from urllib import response
 from wsgiref.simple_server import make_server
 from pyramid.config import Configurator
 from pyramid.response import Response, FileResponse
@@ -5,6 +6,7 @@ from pyramid.renderers import render_to_response
 import mysql.connector as mysql
 from dotenv import load_dotenv
 import os
+# import datetime
 
 load_dotenv('credentials.env')
 
@@ -13,6 +15,7 @@ db_host = os.environ['MYSQL_HOST']
 db_user = os.environ['MYSQL_USER']
 db_pass = os.environ['MYSQL_PASSWORD']
 db_name = os.environ['MYSQL_DATABASE']
+public_path = os.environ['PUBLIC_PATH']
 
 def get_home(req):
     return FileResponse('./web_server/index.html')
@@ -20,15 +23,64 @@ def get_home(req):
 def door_override(req):
     return Response("Hello")
 
+def querry_db(a_table,start_date,end_date):
+    db = mysql.connect(host=db_host, user=db_user, passwd=db_pass, database=db_name)
+    cursor = db.cursor()
+    cursor.execute("SET time_zone = 'America/Los_Angeles';")
+    cursor.execute(
+        f'SELECT * FROM {a_table} WHERE timestamp BETWEEN '
+        f'"{start_date}" AND "{end_date} 23:59:59";'
+    )
+    record = cursor.fetchall()
+    db.close()
+    if 0==len(record):
+        return False
+    print('record found')
+    return record
+
+
+def door_querry(req):
+    start_date=req.params['start']
+    end_date=req.params['end']
+    print(f'start: {start_date}\nend: {end_date}')
+    the_record=querry_db('User_Auth',start_date,end_date)
+    # print(the_record)
+    if not the_record:
+        print("no record")
+        return {'id' : "No records."}
+    the_response=[]
+    for item in the_record:
+        # print(item[2])
+        # the_timestamp=item[2]
+        # print(the_timestamp)
+        the_response.append(
+            {
+                'id' : item[0],
+                'name' : item[1].strip(),
+                'timestamp' : str(item[2]),
+                'success' : item[3]
+            }
+        )
+
+    # print(the_response)
+    return the_response
+
 def main():
     with Configurator() as config:
         config.add_route('home', '/')
         config.add_view(get_home, route_name='home')
 
-        config.add_route('door', '/door/{state}')
-        config.add_view(door_override, route_name='door')
+        # config.add_route('door', '/door/{state}')
+        # config.add_view(door_override, route_name='door')
+        config.add_route('door', '/door')
+        config.add_view(door_querry, route_name='door', renderer='json')
 
-        config.add_static_view(name='/', path='/home/pi/repositories/ece-140a-winter-2022-mdlopezme/Lab-6/Midterm/web_server/public', cache_max_age=3600)
+        # config.add_static_view(name='/', path='/home/pi/repositories/ece-140a-winter-2022-mdlopezme/Lab-6/Midterm/web_server/public', cache_max_age=3600)
+
+        # # add PUBLIC_PATH = /home/pi/repositories/ece-140a-winter-2022-mdlopezme/Lab-6/Midterm/web_server/public> 
+        # # to credentials.env
+        config.add_static_view(name='/', path=public_path, cache_max_age=3600)
+        # config.add_static_view(name='/', path='./public', cache_max_age=3600)
 
         app = config.make_wsgi_app()
 

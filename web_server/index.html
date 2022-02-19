@@ -24,7 +24,7 @@
                     value="2022-02-14"
                         min="2022-01-01" max="2025-12-31">
                 
-                <input type="submit" value="Submit">
+                <input type="submit" value="Submit" onclick="door_logs()">
         
                 <h5>Door Bell Logs</h5>
                 <label for="bell-start">Start date:</label>
@@ -39,7 +39,7 @@
                     value="2022-02-14"
                         min="2022-01-01" max="2025-12-31">
                 
-                <input type="submit" value="Submit">
+                <input type="submit" value="Submit" onclick="bell_logs()">
             </div>
             <div class="grid-item">
                 <h5> Manual Door Override </h5>
@@ -58,7 +58,7 @@
           <hr>
           <div class="grid-container">
             <div class="grid-item">
-                <h3>Door Authorization Attempts Logs</h3>
+                <h3>Door Authorization Attempts</h3>
                 <table class="stylish-table" border="1">
                     <thead>
                       <tr>
@@ -66,8 +66,8 @@
                       </tr>
                     </thead>
                 
-                    <tbody>
-                      <tr>
+                    <tbody id="door log">
+                      <tr> 
                         <td style="text-align:center">{{ record[0] }}</td>
                         <td style="text-align:center">{{ record[1] }}</td>
                         <td style="text-align:center">{{ record[2] }}</td>
@@ -77,11 +77,11 @@
                   </table>
             </div>
             <div class="grid-item">
-                <h3>Door Bell Logs</h3>
+                <h3>Door Bell Log</h3>
                 <table class="stylish-table" border="1">
                     <thead>
                       <tr>
-                        <th>ID</th><th>Rigged</th><th>Timestamp</th>
+                        <th>log ID</th><th>Rang</th><th>Timestamp</th>
                       </tr>
                     </thead>
                 
