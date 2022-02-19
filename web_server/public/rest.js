@@ -1,3 +1,21 @@
+document.addEventListener("DOMContentLoaded", function() {
+  var dateObj = new Date();
+
+  var day = ("0" + dateObj.getDate()).slice(-2);
+  var month = ("0" + (dateObj.getMonth() + 1)).slice(-2);
+  var today = dateObj.getFullYear()+"-"+(month)+"-"+(day) ;
+
+  document.getElementById('lock-start').value=today;
+  document.getElementById('lock-end').value=today;
+  document.getElementById('bell-start').value=today;
+  document.getElementById('bell-end').value=today;
+
+  document.getElementById('lock-start').max=today;
+  document.getElementById('lock-end').max=today;
+  document.getElementById('bell-start').max=today;
+  document.getElementById('bell-end').max=today;
+});
+
 function door_control(){
     console.log("com")
     // door_state = document.getElementById("height").value.split("-");
@@ -43,7 +61,7 @@ function inject_response(response,tableID) {
   }
   else {
     for (const key in response) {
-      console.log(response[key])
+      // console.log(response[key])
       let theRow = theTable.insertRow();
       for (const innerKey in response[key]) {
         theRow.insertCell().innerHTML=response[key][innerKey];
@@ -54,8 +72,8 @@ function inject_response(response,tableID) {
 
 function door_logs() {
   console.log("Get door attempts.");
-  let theUrl=get_URL('lock-start','lock-end')
-  fetch(theUrl)
+  let theURL=get_URL('lock-start','lock-end')
+  fetch(theURL)
     .then(response=>response.json())
     .then(function(response) {
       inject_response(response,'door log');
