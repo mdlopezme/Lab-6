@@ -36,7 +36,7 @@ def log_user_auths(user_credentials):
     user_credentials[4]=True
 
 def log_ringer(ringer_info):
-    if(ringer_info[1]==True):
+    if(ringer_info[0]==True):
         return
 
     db = mysql.connect(
@@ -49,14 +49,14 @@ def log_ringer(ringer_info):
 
     try:
         cursor.execute(f'''
-            INSERT INTO Bell_Rings (ringed) VALUES ({ringer_info[0]});
+            INSERT INTO Bell_Rings (ringed) VALUES (True);
         ''')
         db.commit()
         print("RINGER DATABASE UPDATED")
     except:
         print(Exception)
     db.close()
-    ringer_info[1]=True
+    ringer_info[0]=True
 
 def log(user_credentials,ringer_info, kill_threads):
     while(not kill_threads[0]):

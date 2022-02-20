@@ -8,8 +8,7 @@ button = Button(20) # define Button pin according to BCM Numbering
 def onButtonPressed(): 
     global ringer_info
     led.on()
-    ringer_info[0] = True
-    ringer_info[1] = False
+    ringer_info[0] = False
     # print("Button Pressed, Bell is Ringing >>>")
     
 def onButtonReleased():
@@ -17,7 +16,7 @@ def onButtonReleased():
     led.off()
     # print("Button Released, Stopping Bell <<<")
 
-ringer_info = [ False, time()-5]
+ringer_info = []
 def ringer(ringer_info_pass, kill_threads):
     global ringer_info
     ringer_info = ringer_info_pass
