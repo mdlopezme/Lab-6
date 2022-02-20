@@ -29,7 +29,8 @@ def setUp():
 
 def destroy(lcd):
     print('Clearing LCD')
-    lcd.clear()
+    # lcd.clear()
+    messageUpdate(lcd,"Sleeping","")
 
 
 first_line = ''
@@ -62,3 +63,4 @@ def update(lcd, user_credentials, kill_threads):
             messageUpdate(lcd, 'Unauthorized User', 'Please Wait')
 
     destroy(lcd)
+    
