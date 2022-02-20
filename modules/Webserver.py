@@ -27,13 +27,13 @@ class WebLock():
       config.add_route('home', '/')
       config.add_view(self.get_home, route_name='home')
 
-      config.add_route('lock', '/lock/{state}')
-      config.add_view(self.door_override, route_name='lock')
+      # config.add_route('lock', '/lock/{state}')
+      # config.add_view(self.door_override, route_name='lock')
       config.add_route('door', '/door')
       config.add_view(self.door_querry, route_name='door', renderer='json')
       config.add_route('bell', '/bell')
       config.add_view(self.bell_query, route_name='bell', renderer='json')
-      config.add_route('override', 'override')
+      config.add_route('override', '/override')
       config.add_view(self.door_override, route_name='override', renderer='json')
 
       # config.add_static_view(name='/', path=public_path, cache_max_age=3600)
@@ -51,8 +51,6 @@ class WebLock():
     # print(f'server thread is {self.server_thread.is_alive()}')
     print("Ending web server")
     self.server.shutdown()
-    s_shutdown=threading.Thread(target=self.server.shutdown, name="server shutdown")
-    s_shutdown.start()
     # print(f'server thread is {self.server_thread.is_alive()}')
 
   def get_home(self,req):
@@ -61,8 +59,7 @@ class WebLock():
   def door_override(self,req):
     the_state=req.params['state'] == 'true'
     set_permanent_unlock(the_state)
-    theResponse = []
-    return theResponse
+    return
   
   def querry_db(self,a_table,start_date,end_date,time_zone):
     db = mysql.connect(host=db_host, user=db_user, passwd=db_pass, database=db_name)
@@ -85,15 +82,11 @@ class WebLock():
     time_zone=req.params['timezone']
     print(f'start: {start_date}\nend: {end_date}')
     the_record=self.querry_db('User_Auth',start_date,end_date,time_zone)
-    # print(the_record)
     if not the_record:
       print("no record")
       return {'id' : "No records."}
     the_response=[]
     for item in the_record:
-      # print(item[2])
-      # the_timestamp=item[2]
-      # print(the_timestamp)
       the_response.append(
         {
           'id' : item[0],
@@ -116,9 +109,6 @@ class WebLock():
       return {'id' : "No records."}
     the_response=[]
     for item in the_record:
-      # print(item[2])
-      # the_timestamp=item[2]
-      # print(the_timestamp)
       the_response.append(
         {
           'id' : item[0],
