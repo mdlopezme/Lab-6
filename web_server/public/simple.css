@@ -39,6 +39,11 @@
   background-color: #f3f3f3;
 }
 
+/* Mouse hover effect for schedule */
+.stylish-table tbody tr:hover {
+  background-color: rgba(246, 207, 143, 0.616);
+}
+
 .stylish-table tbody tr:last-of-type {
   border-bottom: 2px solid #e36444;
 }
