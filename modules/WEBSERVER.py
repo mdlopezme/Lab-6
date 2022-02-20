@@ -65,7 +65,7 @@ class WebLock():
     start_date=req.params['start']
     end_date=req.params['end']
     time_zone=req.params['timezone']
-    print(f'start: {start_date}\nend: {end_date}')
+    # print(f'start: {start_date}\nend: {end_date}')
     the_record=self.querry_db('User_Auth',start_date,end_date,time_zone)
     if not the_record:
       print("no record")
