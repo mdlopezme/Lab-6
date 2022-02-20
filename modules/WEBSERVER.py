@@ -3,7 +3,7 @@ from wsgiref.simple_server import make_server
 from pyramid.config import Configurator
 from pyramid.response import Response, FileResponse
 import mysql.connector as mysql
-import modules.ENV as ENV
+import modules.ENVIRONMENT as ENVIRONMENT
 from .SERVO import set_permanent_unlock
 import threading
 
@@ -47,7 +47,7 @@ class WebLock():
     return Response()
   
   def querry_db(self,a_table,start_date,end_date,time_zone):
-    db = mysql.connect(host=ENV.db_host, user=ENV.db_user, passwd=ENV.db_pass, database=ENV.db_name)
+    db = mysql.connect(host=ENVIRONMENT.db_host, user=ENVIRONMENT.db_user, passwd=ENVIRONMENT.db_pass, database=ENVIRONMENT.db_name)
     cursor = db.cursor()
     cursor.execute(f'SET time_zone = "{time_zone}";')
     cursor.execute(
