@@ -8,7 +8,7 @@ import mysql.connector as mysql
 from dotenv import load_dotenv
 import os
 # import datetime
-from .SERVO import set_permanet_unclock
+from .SERVO import set_permanent_unlock
 from time import sleep
 
 load_dotenv('credentials.env')
@@ -93,7 +93,7 @@ def bell_query(req):
 
 def door_override(req):
     state=req.params['state'] == 'true'
-    set_permanet_unclock(state)
+    set_permanent_unlock(state)
     theResponse = []
     return theResponse
 
