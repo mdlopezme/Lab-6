@@ -36,8 +36,8 @@ class WebLock():
       config.add_route('override', 'override')
       config.add_view(self.door_override, route_name='override', renderer='json')
 
-      # config.add_static_view(name='/', path='/home/pi/repositories/ece-140a-winter-2022-mdlopezme/Lab-6/Midterm/web_server/public', cache_max_age=3600)
-      config.add_static_view(name='/', path=public_path, cache_max_age=3600)
+      # config.add_static_view(name='/', path=public_path, cache_max_age=3600)
+      config.add_static_view(name='/', path='main:web_server/public/', cache_max_age=3600)
       app = config.make_wsgi_app()
 
     self.server = make_server('0.0.0.0', 6543, app)
