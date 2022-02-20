@@ -46,15 +46,14 @@ class WebLock():
     print('Web server started on: http://192.168.0.100:6543')
     self.server_thread=threading.Thread(target=self.server.serve_forever,name="Web Server")
     self.server_thread.start()
-    print(f'server thread is {self.server_thread.is_alive()}')
 
   def stop(self):
-    print(f'server thread is {self.server_thread.is_alive()}')
+    # print(f'server thread is {self.server_thread.is_alive()}')
     print("Ending web server")
     self.server.shutdown()
     s_shutdown=threading.Thread(target=self.server.shutdown, name="server shutdown")
     s_shutdown.start()
-    print(f'server thread is {self.server_thread.is_alive()}')
+    # print(f'server thread is {self.server_thread.is_alive()}')
 
   def get_home(self,req):
     return FileResponse('./web_server/index.html')
