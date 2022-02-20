@@ -36,7 +36,7 @@ def log_user_auths(user_credentials):
     user_credentials[4]=True
 
 def log_ringer(ringer_info):
-    if(ringer_info[2]==True):
+    if(ringer_info[1]==True):
         return
 
     db = mysql.connect(
@@ -56,7 +56,7 @@ def log_ringer(ringer_info):
     except:
         print(Exception)
     db.close()
-    ringer_info[2]=True
+    ringer_info[1]=True
 
 def log(user_credentials,ringer_info, kill_threads):
     while(not kill_threads[0]):

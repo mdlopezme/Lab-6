@@ -16,7 +16,7 @@ def main():
     [lcd, reader] = LCD.setUp()
     TIMEOUT = 5
     user_credentials = [0, '', time()-TIMEOUT, False, True ]
-    ringer_info =[ False, time()-TIMEOUT, True ]
+    ringer_info =[ False, True ]
     kill_threads = [False]
 
     web_server=WEBSERVER.WebLock()

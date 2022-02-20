@@ -9,8 +9,7 @@ def onButtonPressed():
     global ringer_info
     led.on()
     ringer_info[0] = True
-    ringer_info[1] = time()
-    ringer_info[2] = False
+    ringer_info[1] = False
     # print("Button Pressed, Bell is Ringing >>>")
     
 def onButtonReleased():
