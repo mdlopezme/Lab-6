@@ -19,7 +19,7 @@ db_host = os.environ['MYSQL_HOST']
 db_user = os.environ['MYSQL_USER']
 db_pass = os.environ['MYSQL_PASSWORD']
 db_name = os.environ['MYSQL_DATABASE']
-public_path = os.environ['PUBLIC_PATH']
+# public_path = os.environ['PUBLIC_PATH']
 
 class WebLock():
   def __init__(self):
@@ -34,7 +34,7 @@ class WebLock():
       config.add_route('bell', '/bell')
       config.add_view(self.bell_query, route_name='bell', renderer='json')
       config.add_route('override', '/override')
-      config.add_view(self.door_override, route_name='override', renderer='json')
+      config.add_view(self.door_override, route_name='override')
 
       # config.add_static_view(name='/', path=public_path, cache_max_age=3600)
       config.add_static_view(name='/', path='main:web_server/public/', cache_max_age=3600)
@@ -59,7 +59,7 @@ class WebLock():
   def door_override(self,req):
     the_state=req.params['state'] == 'true'
     set_permanent_unlock(the_state)
-    return
+    return Response()
   
   def querry_db(self,a_table,start_date,end_date,time_zone):
     db = mysql.connect(host=db_host, user=db_user, passwd=db_pass, database=db_name)
