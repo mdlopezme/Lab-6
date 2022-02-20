@@ -12,14 +12,16 @@ def readNFC(user_credentials, kill_threads):
         id, user = reader.read(kill_threads)
 
         # print(id)
+        # print(ENVIRONMENT.OLIVIER_ROGERS)
+        # print(ENVIRONMENT.MOISES_LOPEZ)
 
-        if id == ENVIRONMENT.OLIVIER_ROGERS or id == ENVIRONMENT.MOISES_LOPEZ:
+        if str(id) == ENVIRONMENT.OLIVIER_ROGERS or str(id) == ENVIRONMENT.MOISES_LOPEZ:
             user_credentials[0] = id
             user_credentials[1] = user.strip()
             user_credentials[2] = time() 
             user_credentials[3] = True # Autheticated
             user_credentials[4] = False # Logged to database
-            # print(f'Autheticated, found: {user}')
+            # print(f'Authenticated, found: {user}')
         else:
             user_credentials[0] = id
             user_credentials[1] = 'Unknown User'
@@ -30,4 +32,4 @@ def readNFC(user_credentials, kill_threads):
         for _ in range(0,10):
             if kill_threads[0]:
                 break
-            sleep(0.5)
+            sleep(.5)

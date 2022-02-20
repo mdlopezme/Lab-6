@@ -9,5 +9,5 @@ db_user = os.environ['MYSQL_USER']
 db_pass = os.environ['MYSQL_PASSWORD']
 db_name = os.environ['MYSQL_DATABASE']
 # public_path = os.environ['PUBLIC_PATH']
-OLIVIER_ROGERS = 397475334654 
-MOISES_LOPEZ = 288461690070
+OLIVIER_ROGERS = os.environ['OLIVIER_ROGERS']
+MOISES_LOPEZ = os.environ['MOISES_LOPEZ']
