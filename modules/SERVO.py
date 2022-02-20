@@ -35,7 +35,7 @@ def set_permanent_unlock(state):
     global permanent_unlock
     permanent_unlock = state
 
-def act(user_credentials, kill_threads):
+def servo(user_credentials, kill_threads):
     global permanent_unlock
     setup()
     locked = False

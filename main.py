@@ -5,13 +5,10 @@ import modules.BELL as BELL
 import modules.SERVO as SERVO
 import modules.LOGGER as LOGGER
 import modules.SEC as SEC
-import modules.Webserver as Webserver
-
-import os
+import modules.WEBSERVER as WEBSERVER
 
 from time import time, sleep
 import threading
-import RPi.GPIO as GPIO
 
 def main():
     print('Starting Program')
@@ -22,14 +19,14 @@ def main():
     ringer_info =[ False, time()-TIMEOUT, True ]
     kill_threads = [False]
 
-    web_server=Webserver.WebLock()
+    web_server=WEBSERVER.WebLock()
 
     try:
         authentication = threading.Thread(target=NFC.readNFC, args=(reader,user_credentials, kill_threads), name="Authentication")
         display = threading.Thread(target=LCD.update, args=(lcd, user_credentials, kill_threads), name="Display")
         security = threading.Thread(target=SEC.secure, args=(user_credentials,TIMEOUT, kill_threads), name="Security")
         bell = threading.Thread(target=BELL.ringer, args=(ringer_info, kill_threads), name="Bell")
-        servo = threading.Thread(target=SERVO.act, args=(user_credentials, kill_threads), name="Servo Motor")
+        servo = threading.Thread(target=SERVO.servo, args=(user_credentials, kill_threads), name="Servo Motor")
         logger = threading.Thread(target=LOGGER.log, args=(user_credentials, ringer_info, kill_threads), name="Logging")
         
         print('Starting threads')
