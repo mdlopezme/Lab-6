@@ -16,4 +16,13 @@ We decided to stick with ssh for logging into the raspberrypi, since we are both
 |:--- |
 | *Challenge 1 from Lab 5 (Olivier), logged in over ssh and running the server app. The browser loads the website from host suffix 100 on the LAN. The user workstation uses suffix 14.* |
 
+
+Moises' Screenshot 
+
+As asked in the tutorial 1, here is a screenshot of the raspberry pi serving my triton gallery implementation.
+
+Why do you see windows interface? Same reason as above
+The hostname of my pi is xnpc. So, the webserver is running on the pi.
+![](Tutorial_1/rasp_is_working.png)
+
 ## Midterm
