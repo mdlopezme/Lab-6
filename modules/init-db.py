@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import mysql.connector as mysql
 import os
 from dotenv import load_dotenv

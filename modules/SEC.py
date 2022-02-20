@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from time import time, sleep
 
 def secure(user_credentials, timeOut, kill_threads):

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from time import time, sleep
 
 def readNFC(reader,user_credentials, kill_threads):

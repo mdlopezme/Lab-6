@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from lib.PCF8574 import PCF8574_GPIO 
 from lib.Adafruit_LCD1602 import Adafruit_CharLCD
 from mfrc522 import SimpleMFRC522

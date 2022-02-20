@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from time import sleep
 import mysql.connector as mysql
 from dotenv import load_dotenv
