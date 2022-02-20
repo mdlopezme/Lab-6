@@ -1,8 +1,6 @@
 from time import sleep
 import mysql.connector as mysql
 from dotenv import load_dotenv
-import datetime
-import time
 import os
 
 load_dotenv('./credentials.env')

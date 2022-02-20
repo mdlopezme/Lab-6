@@ -1,11 +1,4 @@
 #!/usr/bin/env python3
-########################################################################
-# Filename    : Sweep.py
-# Description : Servo sweep
-# Author      : www.freenove.com
-# modification: 2019/12/27
-########################################################################
-from enum import Flag
 import RPi.GPIO as GPIO
 import time
 OFFSET_DUTY = 0.5        # define pulse offset of servo
@@ -42,27 +35,20 @@ def set_permanent_unlock(state):
     global permanent_unlock
     permanent_unlock = state
 
-def act(user_credentials, timeOut, kill_threads):
+def act(user_credentials, kill_threads):
     global permanent_unlock
     setup()
     locked = False
-    # try:
+    
     while(not kill_threads[0]):
-        # print((permanent_unlock,user_credentials[3]))
-
         if not permanent_unlock and not user_credentials[3]:
             if not locked:
                 lock()
                 locked = True
         elif locked:
-            # if locked:
-                unlock()
-                locked = False
+            unlock()
+            locked = False
 
         time.sleep(0.5)
-    # except KeyboardInterrupt:
-    #     pass
     p.stop()
     print("Servo stopping")
-    # GPIO.setmode(GPIO.BCM)
-    # GPIO.cleanup()

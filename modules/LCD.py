@@ -1,5 +1,3 @@
-from re import L
-from sqlite3 import Time
 from lib.PCF8574 import PCF8574_GPIO 
 from lib.Adafruit_LCD1602 import Adafruit_CharLCD
 from mfrc522 import SimpleMFRC522
@@ -44,7 +42,7 @@ def messageUpdate(lcd, first, second):
     lcd.clear()
     lcd.message( first + '\n')
     lcd.message( second )
-    # sleep(2)
+    
     first_line = first
     second_line = second
     

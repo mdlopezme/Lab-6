@@ -1,7 +1,6 @@
-from os import kill
 from time import time, sleep
 
-def readNFC(reader,user_credentials, timeOut, kill_threads):
+def readNFC(reader,user_credentials, kill_threads):
     while(not kill_threads[0]):
         print("Waiting for authentication")
         

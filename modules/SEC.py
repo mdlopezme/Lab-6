@@ -1,4 +1,3 @@
-from os import kill
 from time import time, sleep
 
 def secure(user_credentials, timeOut, kill_threads):

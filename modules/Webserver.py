@@ -1,15 +1,10 @@
-from logging import shutdown
-from sys import modules
 from wsgiref.simple_server import make_server
 from pyramid.config import Configurator
 from pyramid.response import Response, FileResponse
-from pyramid.renderers import render_to_response
 import mysql.connector as mysql
 from dotenv import load_dotenv
 import os
-# import datetime
 from .SERVO import set_permanent_unlock
-from time import sleep
 import threading
 
 load_dotenv('credentials.env')
@@ -26,9 +21,6 @@ class WebLock():
     with Configurator() as config:
       config.add_route('home', '/')
       config.add_view(self.get_home, route_name='home')
-
-      # config.add_route('lock', '/lock/{state}')
-      # config.add_view(self.door_override, route_name='lock')
       config.add_route('door', '/door')
       config.add_view(self.door_querry, route_name='door', renderer='json')
       config.add_route('bell', '/bell')
@@ -36,7 +28,6 @@ class WebLock():
       config.add_route('override', '/override')
       config.add_view(self.door_override, route_name='override')
 
-      # config.add_static_view(name='/', path=public_path, cache_max_age=3600)
       config.add_static_view(name='/', path='main:web_server/public/', cache_max_age=3600)
       app = config.make_wsgi_app()
 
@@ -48,10 +39,8 @@ class WebLock():
     self.server_thread.start()
 
   def stop(self):
-    # print(f'server thread is {self.server_thread.is_alive()}')
     print("Ending web server")
     self.server.shutdown()
-    # print(f'server thread is {self.server_thread.is_alive()}')
 
   def get_home(self,req):
     return FileResponse('./web_server/index.html')
