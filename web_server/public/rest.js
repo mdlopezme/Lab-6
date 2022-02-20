@@ -20,18 +20,22 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function door_control(){
-    console.log("Manual Door Override")
-    door_state = document.getElementById("door_cotrol").checked
+    console.log("Manual Door Override");
+    let door_state = document.getElementById("door_cotrol").checked;
     // True is  Unlocked, False is Automatic
 
-    theUrl = '/override?state=' + door_state
-    fetch(theUrl)
+    let theUrl = '/override?state=' + door_state;
+    fetch(theUrl);
 }
 
 function get_URL_params(start_id,end_id) {
-  let timeZone=Intl.DateTimeFormat().resolvedOptions().timeZone
+  let timeZone=Intl.DateTimeFormat().resolvedOptions().timeZone;
   let startDate=document.getElementById(start_id).value;
   let endDate=document.getElementById(end_id).value;
+  if (startDate>endDate) {
+    console.log("wrong dates");
+    return false;
+  }
   return '?start='+startDate+'&end='+endDate+'&timezone='+timeZone;
 }
 
@@ -42,11 +46,15 @@ function inject_response(response,tableID) {
   for (let i = 0; i < rowCount; i++) {
       theTable.deleteRow(0);
   }
-
-  if(response['id']=="No records.") {
-    console.log("no record response")
+  if(!response) {
     let theRow = theTable.insertRow();
-    theRow.insertCell().innerHTML = "No records found."
+    theRow.insertCell().innerHTML = "The end date should be after the start date.";
+    return;
+  }
+  if(response['id']=="No records.") {
+    console.log("no record response");
+    let theRow = theTable.insertRow();
+    theRow.insertCell().innerHTML = "No records found.";
   }
   else {
     for (const key in response) {
@@ -61,22 +69,30 @@ function inject_response(response,tableID) {
 
 function door_logs() {
   console.log("Get door attempts.");
-  let theUrl='/door' + get_URL_params('lock-start','lock-end')
+  let urlParam=get_URL_params('lock-start','lock-end')
+  if(!urlParam) {
+    inject_response(false,'door log');
+    return;
+  }
+  let theUrl='/door' + urlParam;
   fetch(theUrl)
     .then(response=>response.json())
     .then(function(response) {
       inject_response(response,'door log');
-    }
-    )
+    })
 }
 
 function bell_logs() {
-    console.log("Get bell rings.");
-    let theUrl='/bell' + get_URL_params('bell-start','bell-end')
-    fetch(theUrl)
+  console.log("Get bell rings.");
+  let urlParam=get_URL_params('bell-start','bell-end')
+  if(!urlParam) {
+    inject_response(false,'bell logs');
+    return;
+  }
+  let theUrl='/bell' + urlParam;
+  fetch(theUrl)
     .then(response=>response.json())
     .then(function(response) {
       inject_response(response,'bell logs');
-    }
-    )
+    })
 }
