@@ -5,16 +5,17 @@ OFFSET_DUTY = 0.5        # define pulse offset of servo
 SERVO_MIN_DUTY = 2.5 + OFFSET_DUTY     # define pulse duty cycle for minimum angle of servo
 SERVO_MAX_DUTY = 12.5 + OFFSET_DUTY    # define pulse duty cycle for maximum angle of servo
 SERVO_DELAY_SEC = 0.001
+SERVO_PIN = 24
 permanent_unlock = False
-servoPin = 24
+
 
 def setup():
     global p
     GPIO.setmode(GPIO.BCM)         # use PHYSICAL GPIO Numbering
-    GPIO.setup(servoPin, GPIO.OUT)   # Set servoPin to OUTPUT mode
-    GPIO.output(servoPin, GPIO.LOW)  # Make servoPin output LOW level
+    GPIO.setup(SERVO_PIN, GPIO.OUT)   # Set servoPin to OUTPUT mode
+    GPIO.output(SERVO_PIN, GPIO.LOW)  # Make servoPin output LOW level
 
-    p = GPIO.PWM(servoPin, 50)     # set Frequence to 50Hz
+    p = GPIO.PWM(SERVO_PIN, 50)     # set Frequence to 50Hz
     p.start(0)                     # Set initial Duty Cycle to 0
     
 def servoWrite(angle):      # make the servo rotate to specific angle, 0-180 

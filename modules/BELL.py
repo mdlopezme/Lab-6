@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from gpiozero import LED, Button
-from time import time, sleep
+from time import sleep
 
 led = LED(21)       # define LED pin according to BCM Numbering
 button = Button(20) # define Button pin according to BCM Numbering

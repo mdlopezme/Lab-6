@@ -20,16 +20,21 @@ db_name = os.environ['MYSQL_DATABASE']
 class WebLock():
   def __init__(self):
     with Configurator() as config:
+      # Add routes
       config.add_route('home', '/')
-      config.add_view(self.get_home, route_name='home')
       config.add_route('door', '/door')
-      config.add_view(self.door_querry, route_name='door', renderer='json')
       config.add_route('bell', '/bell')
-      config.add_view(self.bell_query, route_name='bell', renderer='json')
       config.add_route('override', '/override')
+
+      # Create views for routes
+      config.add_view(self.get_home, route_name='home')
+      config.add_view(self.door_querry, route_name='door', renderer='json')
+      config.add_view(self.bell_query, route_name='bell', renderer='json')
       config.add_view(self.door_override, route_name='override')
 
+      # Static Routes
       config.add_static_view(name='/', path='main:web_server/public/', cache_max_age=3600)
+      
       app = config.make_wsgi_app()
 
     self.server = make_server('0.0.0.0', 6543, app)
@@ -107,4 +112,3 @@ class WebLock():
         }
       )
     return the_response
-
