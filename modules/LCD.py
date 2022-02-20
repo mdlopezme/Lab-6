@@ -44,7 +44,8 @@ def messageUpdate(lcd, first, second):
     second_line = second
     
 
-def update(lcd, user_credentials, kill_threads):
+def update(user_credentials, kill_threads):
+    lcd = setUp()
     lcd.begin(16,2)     # set number of LCD lines and columns
     
     while(not kill_threads[0]):

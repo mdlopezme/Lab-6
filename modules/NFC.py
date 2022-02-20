@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from time import time, sleep
 from mfrc522 import SimpleMFRC522
+import modules.ENV as ENV
 
 def readNFC(user_credentials, kill_threads):
     # Setup NFC Reader
@@ -12,7 +13,7 @@ def readNFC(user_credentials, kill_threads):
 
         # print(id)
 
-        if id == 397475334654 or id == 288461690070:
+        if id == ENV.OLIVIER_ROGERS or id == ENV.MOISES_LOPEZ:
             user_credentials[0] = id
             user_credentials[1] = user.strip()
             user_credentials[2] = time() 

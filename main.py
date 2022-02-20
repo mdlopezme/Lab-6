@@ -13,7 +13,6 @@ import threading
 def main():
     print('Starting Program')
 
-    lcd = LCD.setUp()
     TIMEOUT = 5
     user_credentials = [0, '', time()-TIMEOUT, False, True ]
     bell_has_been_logged =[ True ]
@@ -22,8 +21,8 @@ def main():
     web_server=WEBSERVER.WebLock()
 
     try:
-        authentication = threading.Thread(target=NFC.readNFC, args=(user_credentials, kill_threads), name="Authentication")
-        display = threading.Thread(target=LCD.update, args=(lcd, user_credentials, kill_threads), name="Display")
+        NFC_reader = threading.Thread(target=NFC.readNFC, args=(user_credentials, kill_threads), name="Authentication")
+        display = threading.Thread(target=LCD.update, args=(user_credentials, kill_threads), name="Display")
         security = threading.Thread(target=SEC.secure, args=(user_credentials,TIMEOUT, kill_threads), name="Security")
         bell = threading.Thread(target=BELL.ringer, args=(bell_has_been_logged, kill_threads), name="Bell")
         servo = threading.Thread(target=SERVO.servo, args=(user_credentials, kill_threads), name="Servo Motor")
@@ -31,7 +30,7 @@ def main():
         
         print('Starting threads')
         web_server.start()
-        authentication.start()
+        NFC_reader.start()
         display.start()
         security.start()
         bell.start()
@@ -48,7 +47,7 @@ def main():
         print('Please wait, killing threads')
         web_server.stop()
         kill_threads[0] = True
-        while authentication.is_alive() or display.is_alive() or security.is_alive() or bell.is_alive() or servo.is_alive() or logger.is_alive():
+        while NFC_reader.is_alive() or display.is_alive() or security.is_alive() or bell.is_alive() or servo.is_alive() or logger.is_alive():
             sleep(1)
 
         print('Finally Exiting')

@@ -16,4 +16,4 @@ We decided to stick with ssh for logging into the raspberrypi, since we are both
 |:--- |
 | *Challenge 1 from Lab 5 (Olivier), logged in over ssh and running the server app. The browser loads the website from host suffix 100 on the LAN. The user workstation uses suffix 14.* |
 
-.
+## Midterm

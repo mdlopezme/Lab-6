@@ -3,19 +3,9 @@ from wsgiref.simple_server import make_server
 from pyramid.config import Configurator
 from pyramid.response import Response, FileResponse
 import mysql.connector as mysql
-from dotenv import load_dotenv
-import os
+import modules.ENV as ENV
 from .SERVO import set_permanent_unlock
 import threading
-
-load_dotenv('credentials.env')
-
-'''Enviroment Variables'''
-db_host = os.environ['MYSQL_HOST']
-db_user = os.environ['MYSQL_USER']
-db_pass = os.environ['MYSQL_PASSWORD']
-db_name = os.environ['MYSQL_DATABASE']
-# public_path = os.environ['PUBLIC_PATH']
 
 class WebLock():
   def __init__(self):
@@ -57,7 +47,7 @@ class WebLock():
     return Response()
   
   def querry_db(self,a_table,start_date,end_date,time_zone):
-    db = mysql.connect(host=db_host, user=db_user, passwd=db_pass, database=db_name)
+    db = mysql.connect(host=ENV.db_host, user=ENV.db_user, passwd=ENV.db_pass, database=ENV.db_name)
     cursor = db.cursor()
     cursor.execute(f'SET time_zone = "{time_zone}";')
     cursor.execute(
