@@ -13,7 +13,7 @@ import threading
 def main():
     print('Starting Program')
 
-    [lcd, reader] = LCD.setUp()
+    lcd = LCD.setUp()
     TIMEOUT = 5
     user_credentials = [0, '', time()-TIMEOUT, False, True ]
     bell_has_been_logged =[ True ]
@@ -22,7 +22,7 @@ def main():
     web_server=WEBSERVER.WebLock()
 
     try:
-        authentication = threading.Thread(target=NFC.readNFC, args=(reader,user_credentials, kill_threads), name="Authentication")
+        authentication = threading.Thread(target=NFC.readNFC, args=(user_credentials, kill_threads), name="Authentication")
         display = threading.Thread(target=LCD.update, args=(lcd, user_credentials, kill_threads), name="Display")
         security = threading.Thread(target=SEC.secure, args=(user_credentials,TIMEOUT, kill_threads), name="Security")
         bell = threading.Thread(target=BELL.ringer, args=(bell_has_been_logged, kill_threads), name="Bell")

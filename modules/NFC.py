@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 from time import time, sleep
+from mfrc522 import SimpleMFRC522
 
-def readNFC(reader,user_credentials, kill_threads):
+def readNFC(user_credentials, kill_threads):
+    # Setup NFC Reader
+    reader = SimpleMFRC522()
     while(not kill_threads[0]):
         print("Waiting for authentication")
         
@@ -23,4 +26,7 @@ def readNFC(reader,user_credentials, kill_threads):
             user_credentials[3] = False
             user_credentials[4] = False
 
-        sleep(.5)
+        for _ in range(0,10):
+            if kill_threads[0]:
+                break
+            sleep(0.5)
