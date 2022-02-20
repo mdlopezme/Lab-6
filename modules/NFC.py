@@ -23,4 +23,4 @@ def readNFC(reader,user_credentials, timeOut, kill_threads):
             user_credentials[3] = False
             user_credentials[4] = False
 
-        sleep(1)
+        sleep(.5)
