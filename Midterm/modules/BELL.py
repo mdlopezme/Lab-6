@@ -2,8 +2,8 @@
 from gpiozero import LED, Button
 from time import sleep
 
-led = LED(21)       # define LED pin according to BCM Numbering
-button = Button(20) # define Button pin according to BCM Numbering
+led = LED(17)       # define LED pin according to BCM Numbering
+button = Button(18) # define Button pin according to BCM Numbering
 
 def onButtonPressed(): 
     global bell_press_has_been_log
