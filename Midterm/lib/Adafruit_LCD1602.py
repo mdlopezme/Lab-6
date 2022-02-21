@@ -1,3 +1,10 @@
+#!/usr/bin/env python3
+########################################################################
+# Filename    : Adafruit_LCD1602.py
+# Description : Send messages to LCD display
+# Author      : Adafruit
+# modification: Unknown
+########################################################################
 from time import sleep
 
 
