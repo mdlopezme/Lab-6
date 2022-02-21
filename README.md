@@ -20,23 +20,28 @@ The purpose of this device is to lock and unlock the door.
 
 Writing Schematics:
 
-![Screen Shot 2022-02-20 at 2.35.24 PM.png](images/Screen%20Shot%202022-02-20%20at%202.35.24%20PM.png?fileId=19790#mimetype=image%2Fpng&hasPreview=true)
+| ![Screen Shot 2022-02-20 at 2.35.24 PM.png](images/Screen%20Shot%202022-02-20%20at%202.35.24%20PM.png?fileId=19790#mimetype=image%2Fpng&hasPreview=true) |
+| :--- |
+| *Servo hook-up guide* |
 
 ### Bell Module
 
 The purpose of this module is to ring the bell when the button is press. The schematics show a LED for feedback, but for our demonstration. Please replace the LED and 220 Ohm resistor with a passive buzzer.
 
-Writing Schematics:
+Wiring Schematics:
 
-![Screen Shot 2022-02-20 at 2.34.23 PM.png](images/Screen%20Shot%202022-02-20%20at%202.34.23%20PM.png?fileId=19764#mimetype=image%2Fpng&hasPreview=true)
-
+| ![Screen Shot 2022-02-20 at 2.34.23 PM.png](images/Screen%20Shot%202022-02-20%20at%202.34.23%20PM.png?fileId=19764#mimetype=image%2Fpng&hasPreview=true) |
+| :--- |
+| *Bell and button hook-up guide* |
 ### LCD Module
 
 The LCD uses I2C and is connected to the SDA1 and SCL1 pins.
 
-Writing Schematics:
+Wiring Schematics:
 
-![Screen Shot 2022-02-20 at 2.36.20 PM.png](images/Screen%20Shot%202022-02-20%20at%202.36.20%20PM.png?fileId=19773#mimetype=image%2Fpng&hasPreview=true)![Screen Shot 2022-02-20 at 2.36.37 PM.png](images/Screen%20Shot%202022-02-20%20at%202.36.37%20PM.png?fileId=19781#mimetype=image%2Fpng&hasPreview=true)
+| ![Screen Shot 2022-02-20 at 2.36.20 PM.png](images/Screen%20Shot%202022-02-20%20at%202.36.20%20PM.png?fileId=19773#mimetype=image%2Fpng&hasPreview=true)![Screen Shot 2022-02-20 at 2.36.37 PM.png](images/Screen%20Shot%202022-02-20%20at%202.36.37%20PM.png?fileId=19781#mimetype=image%2Fpng&hasPreview=true) |
+| :--- |
+| *LCD hook-up guide* |
 
 ### NFC Module
 
@@ -58,7 +63,9 @@ Wiring Schematics
 
 **3.3V** connects to your **positive rail** (or you can connect to Board pin 1)
 
-![ioctfig2.png](images/ioctfig2.png?fileId=19804#mimetype=image%2Fpng&hasPreview=true)
+| ![ioctfig2.png](images/ioctfig2.png?fileId=19804#mimetype=image%2Fpng&hasPreview=true) |
+| :--- |
+| *NFC hook-up guide* |
 
 ## Software
 
@@ -139,20 +146,15 @@ Setting up SQL was nearly identical to that on my system with the main differenc
 
 We decided to stick with ssh for logging into the raspberrypi, since we are both used to the linux cli and VS Code works nicely over ssh.
 
-| ![Olivier Lab 5 Challenge](images/T1_Oli.png) |\
-| :--- |\
-| *Challenge 1 from Lab 5 (Olivier), logged in over ssh and running the server app. The browser loads the website from host suffix 100 on the LAN. The user workstation uses suffix 14.* |
+| ![Olivier Lab 5 Challenge](images/T1_Oli.png) |
+| :--- |
+| *Challenge 1 from Lab 5 Olivier: Logged onto the pi over ssh and running the server app. The browser loads the website from host suffix 100 on the LAN. The user workstation uses suffix 14.* |
 
-Tutorial 1 - Moises Lopez
 
-As asked in the tutorial 1, here is a screenshot of the raspberry pi serving my triton gallery implementation.
 
-I have logged in to the pi using ssh. The pi's hostname is xnpc.
-
-My teammate and I are very familiar with CLI. So we prefer to run our pi heedlessly.
-
-![rasp\_is\_working.png](images/rasp_is_working.png?fileId=20212#mimetype=image%2Fpng&hasPreview=true)
-
+| ![rasp\_is\_working.png](images/rasp_is_working.png?fileId=20212#mimetype=image%2Fpng&hasPreview=true) |
+| :--- |
+| *Tutorial 1 - Moises Lopez: As asked in the tutorial 1, here is a screenshot of the raspberry pi serving my triton gallery implementation. I have logged in to the pi using ssh. The pi's hostname is xnpc. My teammate and I are very familiar with CLI. So we prefer to run our pi heedlessly.* |
 ## Tutorial 2: Basic I/O on Raspberry Pi
 
 In this tutorial, we learned how to program and use the raspberry to read values from the GPIO. It was really fun to see how this works in the raspberry pi because we have only done this type of stuff in Arduino.
