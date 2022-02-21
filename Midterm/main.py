@@ -15,7 +15,7 @@ def main():
 
     TIMEOUT = 5
     user_credentials = [0, '', time()-TIMEOUT, False, True ]
-    bell_has_been_logged =[ True ]
+    record_bell_event =[ False ]
     kill_threads = [False]
 
     web_server=WEBSERVER.WebLock()
@@ -24,9 +24,9 @@ def main():
         NFC_reader = threading.Thread(target=NFC.readNFC, args=(user_credentials, kill_threads), name="Authentication")
         display = threading.Thread(target=LCD.update, args=(user_credentials, kill_threads), name="Display")
         security = threading.Thread(target=SEC.secure, args=(user_credentials,TIMEOUT, kill_threads), name="Security")
-        bell = threading.Thread(target=BELL.ringer, args=(bell_has_been_logged, kill_threads), name="Bell")
+        bell = threading.Thread(target=BELL.ringer, args=(record_bell_event, kill_threads), name="Bell")
         servo = threading.Thread(target=SERVO.servo, args=(user_credentials, kill_threads), name="Servo Motor")
-        logger = threading.Thread(target=LOGGER.log, args=(user_credentials, bell_has_been_logged, kill_threads), name="Logging")
+        logger = threading.Thread(target=LOGGER.log, args=(user_credentials, record_bell_event, kill_threads), name="Logging")
         
         print('Starting threads')
         web_server.start()

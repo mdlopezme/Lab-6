@@ -6,20 +6,20 @@ led = LED(21)       # define LED pin according to BCM Numbering
 button = Button(20) # define Button pin according to BCM Numbering
 
 def onButtonPressed(): 
-    global bell_press_has_been_log
+    global record_bell_event
     led.on()
-    bell_press_has_been_log[0] = False
+    record_bell_event[0] = True
     # print("Button Pressed, Bell is Ringing >>>")
     
 def onButtonReleased():
-    global bell_press_has_been_log
+    global record_bell_event
     led.off()
     # print("Button Released, Stopping Bell <<<")
 
-bell_press_has_been_log = []
-def ringer(bell_press_has_been_log_pass, kill_threads):
-    global bell_press_has_been_log
-    bell_press_has_been_log = bell_press_has_been_log_pass
+record_bell_event = []
+def ringer(bell_event, kill_threads):
+    global record_bell_event
+    record_bell_event = bell_event
 
     button.when_pressed = onButtonPressed
     button.when_released = onButtonReleased
