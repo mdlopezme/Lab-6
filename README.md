@@ -67,7 +67,7 @@ Wiring Schematics
 | :--- |
 | *NFC hook-up guide* |
 
-## Software
+# Software
 
 ### modules/BELL.py
 
@@ -138,7 +138,7 @@ Uses the LCD Display Data. Made by Freenove.
 
 PCF8574 as Raspberry GPIO. Made by Freenove.
 
-## Tutorial 1: Setup Raspberry Pi
+# Tutorial 1: Setup Raspberry Pi
 
 Setting up the Raspberry Pi is similar to setting up a headless linux machine, except the imaging tool from [raspberrypi](https://www.raspberrypi.com/software/) makes it even easier by setting up wifi and ssh in the image.
 
@@ -155,6 +155,6 @@ We decided to stick with ssh for logging into the raspberrypi, since we are both
 | ![rasp\_is\_working.png](images/rasp_is_working.png?fileId=20212#mimetype=image%2Fpng&hasPreview=true) |
 | :--- |
 | *Tutorial 1 - Moises Lopez: As asked in the tutorial 1, here is a screenshot of the raspberry pi serving my triton gallery implementation. I have logged in to the pi using ssh. The pi's hostname is xnpc. My teammate and I are very familiar with CLI. So we prefer to run our pi heedlessly.* |
-## Tutorial 2: Basic I/O on Raspberry Pi
+# Tutorial 2: Basic I/O on Raspberry Pi
 
 In this tutorial, we learned how to program and use the raspberry to read values from the GPIO. It was really fun to see how this works in the raspberry pi because we have only done this type of stuff in Arduino.
