@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function user_select() {
-  console.log('populating select option')
+  console.log('Populating select options')
   fetch('/users')
     .then(response=>response.json())
     .then(function(response) {
@@ -32,7 +32,6 @@ function user_select() {
         select_box.options[select_box.options.length] = new Option(theText,theValue);
       }
     })
-  console.log('done with user select')
 }
 
 function door_control(){
