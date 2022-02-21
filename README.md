@@ -12,6 +12,8 @@ The premise of our project is to create a platform for a security surveillance s
 
 <https://youtu.be/jVWVbNMzj2U>
 
+Note (not explained in the video): the select menu for users is dynamically populated by sending a request to the web server to querry all the user name entries in the database.
+
 # HARDware Setup
 
 ### Servo Module
