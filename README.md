@@ -103,7 +103,9 @@ Setting up SQL was nearly identical to that on my system with the main differenc
 
 We decided to stick with ssh for logging into the raspberrypi, since we are both used to the linux cli and VS Code works nicely over ssh.
 
-| ![Olivier Lab 5 Challenge](images/T1_Oli.png) | |:--- | | *Challenge 1 from Lab 5 (Olivier), logged in over ssh and running the server app. The browser loads the website from host suffix 100 on the LAN. The user workstation uses suffix 14.* |
+| ![Olivier Lab 5 Challenge](images/T1_Oli.png) |  
+|:--- |  
+| *Challenge 1 from Lab 5 (Olivier), logged in over ssh and running the server app. The browser loads the website from host suffix 100 on the LAN. The user workstation uses suffix 14.* |  
 
 ## Tutorial 2: Basic I/O on Raspberry Pi
 
