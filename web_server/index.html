@@ -11,7 +11,7 @@
 
         <div class="grid-container">
             <div class="grid-item">
-                <h5>Security Door Authorization Attemps</h5>
+                <h5>Security Door Authorization Attempts</h5>
                 <label for="lock-start">Start date:</label>
 
                 <input type="date" id="lock-start" name="lock-start"
@@ -23,9 +23,16 @@
                 <input type="date" id="lock-end" name="lock-end"
                     value=""
                         min="2022-01-01" max="">
+
+                        <select name="door user" id="door user">
+                  <option value="all_users">All Users</option>
+                </select> 
                 
+                        
                 <input type="submit" value="Submit" onclick="door_logs()">
-        
+
+                <label for="door user">Select User</label>
+
                 <h5>Door Bell Logs</h5>
                 <label for="bell-start">Start date:</label>
     

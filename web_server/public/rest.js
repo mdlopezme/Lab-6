@@ -15,9 +15,25 @@ document.addEventListener("DOMContentLoaded", function() {
   document.getElementById('bell-start').max=today;
   document.getElementById('bell-end').max=today;
 
+  user_select();
   door_logs();
   bell_logs();
 });
+
+function user_select() {
+  console.log('populating select option')
+  fetch('/users')
+    .then(response=>response.json())
+    .then(function(response) {
+      let select_box = document.getElementById('door user');
+      for(index in response) {
+        let theValue = response[index]['value']
+        let theText = response[index]['text']
+        select_box.options[select_box.options.length] = new Option(theText,theValue);
+      }
+    })
+  console.log('done with user select')
+}
 
 function door_control(){
     console.log("Manual Door Override");
@@ -46,6 +62,7 @@ function inject_response(response,tableID) {
   for (let i = 0; i < rowCount; i++) {
       theTable.deleteRow(0);
   }
+  // add rows
   if(!response) {
     let theRow = theTable.insertRow();
     theRow.insertCell().innerHTML = "The end date should be after the start date.";
@@ -69,12 +86,15 @@ function inject_response(response,tableID) {
 
 function door_logs() {
   console.log("Get door attempts.");
+  let theUser=document.getElementById('door user').value;
+  // console.log(theUser)
   let urlParam=get_URL_params('lock-start','lock-end')
   if(!urlParam) {
     inject_response(false,'door log');
     return;
   }
-  let theUrl='/door' + urlParam;
+  let theUrl='/door' + urlParam + '&user=' + theUser;
+  // console.log(theUrl)
   fetch(theUrl)
     .then(response=>response.json())
     .then(function(response) {

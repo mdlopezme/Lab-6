@@ -15,12 +15,14 @@ class WebLock():
       config.add_route('door', '/door')
       config.add_route('bell', '/bell')
       config.add_route('override', '/override')
+      config.add_route('users', '/users')
 
       # Create views for routes
       config.add_view(self.get_home, route_name='home')
-      config.add_view(self.door_querry, route_name='door', renderer='json')
+      config.add_view(self.door_query, route_name='door', renderer='json')
       config.add_view(self.bell_query, route_name='bell', renderer='json')
       config.add_view(self.door_override, route_name='override')
+      config.add_view(self.users_query, route_name='users', renderer='json')
 
       # Static Routes
       config.add_static_view(name='/', path='main:web_server/public/', cache_max_age=3600)
@@ -46,14 +48,21 @@ class WebLock():
     set_permanent_unlock(the_state)
     return Response()
   
-  def querry_db(self,a_table,start_date,end_date,time_zone):
+  def query_db(self,a_table,start_date,end_date,time_zone,user="all_users"):
     db = mysql.connect(host=ENVIRONMENT.db_host, user=ENVIRONMENT.db_user, passwd=ENVIRONMENT.db_pass, database=ENVIRONMENT.db_name)
     cursor = db.cursor()
     cursor.execute(f'SET time_zone = "{time_zone}";')
-    cursor.execute(
+    if "all_users"==user:
+      cursor.execute(
         f'SELECT * FROM {a_table} WHERE timestamp BETWEEN '
         f'"{start_date}" AND "{end_date} 23:59:59";'
-    )
+      )
+    else:  
+      cursor.execute(
+        f'SELECT * FROM {a_table} WHERE timestamp BETWEEN '
+        f'"{start_date}" AND "{end_date} 23:59:59" '
+        f'AND name="{user.replace("_"," ")}";'
+      )
     record = cursor.fetchall()
     db.close()
     if 0==len(record):
@@ -61,12 +70,13 @@ class WebLock():
     print('record found')
     return record
 
-  def door_querry(self,req):
+  def door_query(self,req):
     start_date=req.params['start']
     end_date=req.params['end']
     time_zone=req.params['timezone']
+    the_user=req.params['user']
     # print(f'start: {start_date}\nend: {end_date}')
-    the_record=self.querry_db('User_Auth',start_date,end_date,time_zone)
+    the_record=self.query_db('User_Auth',start_date,end_date,time_zone,the_user)
     if not the_record:
       print("no record")
       return {'id' : "No records."}
@@ -87,7 +97,7 @@ class WebLock():
     end_date=req.params['end']
     time_zone=req.params['timezone']
     print(f'start: {start_date}\nend: {end_date}')
-    the_record=self.querry_db('Bell_Rings',start_date,end_date,time_zone)
+    the_record=self.query_db('Bell_Rings',start_date,end_date,time_zone)
 
     if not the_record:
       print("no record")
@@ -101,4 +111,25 @@ class WebLock():
           'timestamp' : str(item[2])
         }
       )
+    return the_response
+
+  def users_query(self,req):
+    db = mysql.connect(host=ENVIRONMENT.db_host, user=ENVIRONMENT.db_user, passwd=ENVIRONMENT.db_pass, database=ENVIRONMENT.db_name)
+    cursor = db.cursor()
+    cursor.execute('SELECT name FROM User_Auth GROUP BY name;')
+    record = cursor.fetchall()
+    db.close()
+    if 0==len(record):
+        return False
+    print('record found')
+    print(record)
+    the_response=[]
+    for item in record:
+      the_response.append(
+        {
+          'value' : item[0].replace(" ","_"),
+          'text' : item[0],
+        }
+      )
+    print(the_response)
     return the_response
