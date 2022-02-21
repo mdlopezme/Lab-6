@@ -6,7 +6,7 @@
 
 ## Introduction
 
-The premise of our project is to create a platform for a security surveillance system using a NCF enabled smart lock.
+The premise of our project is to create a platform for a security surveillance system that uses a NCF enabled smart lock.
 
 ## Video Demonstration of Working Product
 

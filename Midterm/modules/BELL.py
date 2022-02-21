@@ -17,12 +17,12 @@ def onButtonReleased():
     # print("Button Released, Stopping Bell <<<")
 
 record_bell_event = []
-def ringer(bell_event, kill_threads):
+def ringer(bell_event, end_threads):
     global record_bell_event
     record_bell_event = bell_event
 
     button.when_pressed = onButtonPressed
     button.when_released = onButtonReleased
 
-    while(not kill_threads[0]):
+    while(not end_threads[0]):
         sleep(1)

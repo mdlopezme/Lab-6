@@ -3,13 +3,13 @@ from time import time, sleep
 from mfrc522 import SimpleMFRC522
 import modules.ENVIRONMENT as ENVIRONMENT
 
-def readNFC(user_credentials, kill_threads):
+def readNFC(user_credentials, end_threads):
     # Setup NFC Reader
     reader = SimpleMFRC522()
-    while(not kill_threads[0]):
+    while(not end_threads[0]):
         print("Waiting for authentication")
         
-        id, user = reader.read(kill_threads)
+        id, user = reader.read(end_threads)
 
         # print(id)
         # print(ENVIRONMENT.OLIVIER_ROGERS)
@@ -33,6 +33,6 @@ def readNFC(user_credentials, kill_threads):
             user_credentials[4] = False
 
         for _ in range(0,10):
-            if kill_threads[0]:
+            if end_threads[0]:
                 break
             sleep(.5)

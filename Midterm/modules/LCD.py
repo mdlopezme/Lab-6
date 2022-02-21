@@ -44,11 +44,11 @@ def messageUpdate(lcd, first, second):
     second_line = second
     
 
-def update(user_credentials, kill_threads):
+def update(user_credentials, end_threads):
     lcd = setUp()
     lcd.begin(16,2)     # set number of LCD lines and columns
     
-    while(not kill_threads[0]):
+    while(not end_threads[0]):
         sleep(1)
         if abs(user_credentials[2]-time()) > 5:
             messageUpdate(lcd, 'Please scan', 'your card.')

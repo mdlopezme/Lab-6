@@ -58,8 +58,8 @@ def log_ringer(record_bell_event):
     db.close()
     record_bell_event[0]=False
 
-def log(user_credentials,bell_event, kill_threads):
-    while(not kill_threads[0]):
+def log(user_credentials,bell_event, end_threads):
+    while(not end_threads[0]):
         log_user_auths(user_credentials)
         log_ringer(bell_event)
         sleep(1)

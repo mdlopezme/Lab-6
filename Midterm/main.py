@@ -16,19 +16,25 @@ def main():
     TIMEOUT = 5
     user_credentials = [0, '', time()-TIMEOUT, False, True ]
     record_bell_event =[ False ]
-    kill_threads = [False]
+    end_threads = [False]
 
     web_server=WEBSERVER.WebLock()
 
     try:
-        NFC_reader = threading.Thread(target=NFC.readNFC, args=(user_credentials, kill_threads), name="Authentication")
-        display = threading.Thread(target=LCD.update, args=(user_credentials, kill_threads), name="Display")
-        security = threading.Thread(target=SEC.secure, args=(user_credentials,TIMEOUT, kill_threads), name="Security")
-        bell = threading.Thread(target=BELL.ringer, args=(record_bell_event, kill_threads), name="Bell")
-        servo = threading.Thread(target=SERVO.servo, args=(user_credentials, kill_threads), name="Servo Motor")
-        logger = threading.Thread(target=LOGGER.log, args=(user_credentials, record_bell_event, kill_threads), name="Logging")
+        NFC_reader = threading.Thread(target=NFC.readNFC, args=(user_credentials, end_threads), name="Authentication")
+        display = threading.Thread(target=LCD.update, args=(user_credentials, end_threads), name="Display")
+        security = threading.Thread(target=SEC.secure, args=(user_credentials,TIMEOUT, end_threads), name="Security")
+        bell = threading.Thread(target=BELL.ringer, args=(record_bell_event, end_threads), name="Bell")
+        servo = threading.Thread(target=SERVO.servo, args=(user_credentials, end_threads), name="Servo Motor")
+        logger = threading.Thread(target=LOGGER.log, args=(user_credentials, record_bell_event, end_threads), name="Logging")
         
         print('Starting threads')
+        # Idealy each module would be encapsulated into 
+        # their own classes. This was implemented with
+        # the web_server which starts up in a thread when 
+        # the start() method is called. There is a stop 
+        # method that ends the web_server thread on keyboard
+        # interrupt.
         web_server.start()
         NFC_reader.start()
         display.start()
@@ -46,7 +52,7 @@ def main():
     finally:
         print('Please wait, we are carefully and gracefully exiting threads')
         web_server.stop()
-        kill_threads[0] = True
+        end_threads[0] = True
         while NFC_reader.is_alive() or display.is_alive() or security.is_alive() or bell.is_alive() or servo.is_alive() or logger.is_alive():
             sleep(1)
 
