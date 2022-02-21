@@ -44,7 +44,7 @@ def main():
         print(e)
         
     finally:
-        print('Please wait, killing threads')
+        print('Please wait, we are carefully and gracefully exiting threads')
         web_server.stop()
         kill_threads[0] = True
         while NFC_reader.is_alive() or display.is_alive() or security.is_alive() or bell.is_alive() or servo.is_alive() or logger.is_alive():
