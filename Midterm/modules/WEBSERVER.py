@@ -122,7 +122,6 @@ class WebLock():
     if 0==len(record):
         return False
     print('record found')
-    print(record)
     the_response=[]
     for item in record:
       the_response.append(
@@ -131,5 +130,4 @@ class WebLock():
           'text' : item[0],
         }
       )
-    print(the_response)
     return the_response

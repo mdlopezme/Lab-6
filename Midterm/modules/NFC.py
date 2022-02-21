@@ -17,7 +17,10 @@ def readNFC(user_credentials, kill_threads):
 
         if str(id) == ENVIRONMENT.OLIVIER_ROGERS or str(id) == ENVIRONMENT.MOISES_LOPEZ:
             user_credentials[0] = id
-            user_credentials[1] = user.strip()
+            user_name = user.strip()
+            if ""==user_name:
+                user_name="John Doe"
+            user_credentials[1] = user_name
             user_credentials[2] = time() 
             user_credentials[3] = True # Autheticated
             user_credentials[4] = False # Logged to database
